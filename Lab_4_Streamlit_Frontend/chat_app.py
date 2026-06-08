@@ -1,9 +1,4 @@
-"""chat_app.py — Streamlit chat UI backed by the Lab 3 network agent.
-
-This is the final polished form of the lab. The earlier steps in the
-README (Steps 2-4) build up to this incrementally; this file represents
-the end state with the polish from Step 5 (sidebar, controls, captions).
-"""
+"""chat_app.py — chat UI backed by the Lab 3 network agent."""
 import sys
 from pathlib import Path
 import streamlit as st
@@ -14,8 +9,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Import the BGP tool from Lab 3. Adding Lab 3's folder to the import path
-# keeps this a self-contained file (no shared package needed).
+# Import the BGP tool from Lab 3. We add Lab 3's folder to the import path
+# so this stays a single self-contained file.
 LAB3_DIR = Path(__file__).parent.parent / "Lab_3_LangChain_Network_Agent"
 sys.path.insert(0, str(LAB3_DIR))
 from bgp_tool import get_bgp_state  # noqa: E402
@@ -51,27 +46,8 @@ agent = build_agent()
 
 # ---------- UI ----------
 
-st.set_page_config(page_title="Network Co-Pilot", page_icon="🌐", layout="centered")
-
-st.title("🌐 Network Co-Pilot")
-st.caption("Ask questions about the lab topology — r1, r2, r3. The assistant uses tools to inspect BGP state.")
-
-with st.sidebar:
-    st.markdown("### Controls")
-    if st.button("Clear conversation"):
-        st.session_state.messages = []
-        st.rerun()
-
-    st.markdown("### Try asking")
-    st.markdown(
-        "- *What is BGP?*\n"
-        "- *What's BGP looking like on r1?*\n"
-        "- *Compare r1 and r3.*\n"
-        "- *Is r3 peering with r1?*\n"
-    )
-
-    st.markdown("### About")
-    st.caption("AutoCon 5 demo — uses canned BGP data from Lab 3's `sample_data/`.")
+st.title("Network Co-Pilot")
+st.caption("Ask questions about the lab topology (r1, r2, r3).")
 
 if "messages" not in st.session_state:
     st.session_state.messages = []

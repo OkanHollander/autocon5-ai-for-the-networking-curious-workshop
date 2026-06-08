@@ -39,8 +39,8 @@ class BgpNeighborList(BaseModel):
 
 SYSTEM_PROMPT = f"""You are a network engineer parsing SR Linux BGP output.
 
-Use this reference to diagnose each session:
-{BGP_REFERENCE}
+# Use this reference to diagnose each session:
+# {BGP_REFERENCE}
 
 If you don't have enough information to diagnose, say "insufficient data" — do not guess.
 """

@@ -14,11 +14,15 @@ PROMPT = "In one sentence, explain why BGP uses TCP instead of UDP."
 
 
 def ask(llm):
-    """Send the prompt, time the call, return (response_text, elapsed_seconds)."""
+    """Stream the response chunk-by-chunk, return (full_text, elapsed_seconds)."""
     start = time.time()
-    response = llm.invoke([HumanMessage(content=PROMPT)])
+    chunks = []
+    for chunk in llm.stream([HumanMessage(content=PROMPT)]):
+        print(chunk.content, end="", flush=True)   # print each chunk as it arrives
+        chunks.append(chunk.content)
+    print()                                         # newline once the stream ends
     elapsed = time.time() - start
-    return response.content, elapsed
+    return "".join(chunks), elapsed
 
 
 # Same interface, different providers
